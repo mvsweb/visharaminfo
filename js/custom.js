@@ -21,417 +21,158 @@ $(function () {
         return $.trim($(this).text()) === 'SAP B1 Support,Upgradtions';
     }).text('SAP B1 Support & Upgrades');
 
-    // Replace the tiny/poor header image logo with a clean responsive brand lockup.
     var $brandLogo = $('.navbar-brand-logo').first();
     if ($brandLogo.length && !$brandLogo.find('.brand-lockup').length) {
         $brandLogo.attr('aria-label', siteName);
-        $brandLogo.html(
-            '<span class="brand-lockup">' +
-                '<span class="brand-mark">V</span>' +
-                '<span class="brand-copy">' +
-                    '<span class="brand-name">Vtechiee</span>' +
-                    '<span class="brand-tagline">IT Solutions</span>' +
-                '</span>' +
-            '</span>'
-        );
+        $brandLogo.html('<span class="brand-lockup"><span class="brand-mark">V</span><span class="brand-copy"><span class="brand-name">Vtechiee</span><span class="brand-tagline">IT Solutions</span></span></span>');
     }
 
-    var responsiveFixCss = `
-        html, body {
-            max-width: 100%;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        img, svg, video, canvas {
-            max-width: 100%;
-            height: auto;
-        }
-
-        a:focus,
-        button:focus,
-        input:focus,
-        textarea:focus {
-            outline: 2px solid #003379 !important;
-            outline-offset: 3px;
-        }
-
-        .wrapper {
-            overflow-x: hidden;
-            overflow-y: visible;
-        }
-
-        .navbar {
-            z-index: 1030;
-        }
-
-        .navbar-container,
-        .navbar-collapse,
-        .footer-container {
-            max-width: 100%;
-        }
-
-        .navbar-brand {
-            min-width: 210px;
-            margin-right: 18px;
-        }
-
-        .navbar-brand-logo,
-        .navbar-brand-logo:hover,
-        .navbar-brand-logo:focus {
-            display: inline-flex;
-            align-items: center;
-            text-decoration: none;
-        }
-
-        .brand-lockup {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            min-width: 190px;
-            padding: 6px 0;
-        }
-
-        .brand-mark {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            background: #003379;
-            color: #fff;
-            font-family: Inter, sans-serif;
-            font-size: 27px;
-            font-weight: 800;
-            line-height: 1;
-            letter-spacing: -1px;
-            box-shadow: 0 8px 18px rgba(0, 51, 121, 0.18);
-        }
-
-        .brand-copy {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            line-height: 1.05;
-        }
-
-        .brand-name {
-            color: #003379;
-            font-family: Inter, sans-serif;
-            font-size: 25px;
-            font-weight: 800;
-            letter-spacing: -0.8px;
-            white-space: nowrap;
-        }
-
-        .brand-tagline {
-            margin-top: 4px;
-            color: #5f6f89;
-            font-family: Inter, sans-serif;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1.4px;
-            text-transform: uppercase;
-            white-space: nowrap;
-        }
-
-        .header-scrolled .brand-lockup {
-            gap: 10px;
-        }
-
-        .header-scrolled .brand-mark {
-            width: 38px;
-            height: 38px;
-            font-size: 23px;
-            border-radius: 10px;
-        }
-
-        .header-scrolled .brand-name {
-            font-size: 22px;
-        }
-
-        .header-scrolled .brand-tagline {
-            font-size: 10px;
-        }
-
-        .navbar-toggler {
-            border: 0;
-            padding: 8px 10px;
-        }
-
-        .nav-link-menu {
-            margin: 0;
-        }
-
-        .header-title,
-        .about-title,
-        .pricing-title h2,
-        .vertical-slider-title,
-        .testimonials-title {
-            overflow-wrap: anywhere;
-        }
-
-        .learn-more-btn,
-        .learn-extra-btn {
-            text-align: center;
-            white-space: normal;
-        }
-
-        .service-box,
-        .blog-details,
-        .pricing-card,
-        .contact-form {
-            max-width: 100%;
-        }
-
+    var sitePolishCss = `
+        html, body { max-width: 100%; overflow-x: hidden; scroll-behavior: smooth; }
+        img, svg, video, canvas { max-width: 100%; height: auto; }
+        a:focus, button:focus, input:focus, textarea:focus { outline: 2px solid #003379 !important; outline-offset: 3px; }
+        .wrapper { overflow-x: hidden; overflow-y: visible; }
+        .navbar { z-index: 1030; transition: padding .25s ease, box-shadow .25s ease, background-color .25s ease, transform .25s ease; }
+        .navbar-container, .navbar-collapse, .footer-container { max-width: 100%; }
+        .navbar-brand { min-width: 210px; margin-right: 18px; }
+        .navbar-brand-logo, .navbar-brand-logo:hover, .navbar-brand-logo:focus { display: inline-flex; align-items: center; text-decoration: none; }
+        .brand-lockup { display: inline-flex; align-items: center; gap: 12px; min-width: 190px; padding: 6px 0; transition: transform .25s ease; }
+        .brand-lockup:hover { transform: translateY(-1px); }
+        .brand-mark { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 12px; background: #003379; color: #fff; font-family: Inter, sans-serif; font-size: 27px; font-weight: 800; line-height: 1; letter-spacing: -1px; box-shadow: 0 8px 18px rgba(0, 51, 121, .18); animation: brandPulse 3.8s ease-in-out infinite; }
+        .brand-copy { display: flex; flex-direction: column; justify-content: center; line-height: 1.05; }
+        .brand-name { color: #003379; font-family: Inter, sans-serif; font-size: 25px; font-weight: 800; letter-spacing: -.8px; white-space: nowrap; }
+        .brand-tagline { margin-top: 4px; color: #5f6f89; font-family: Inter, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; white-space: nowrap; }
+        .header-scrolled .brand-lockup { gap: 10px; }
+        .header-scrolled .brand-mark { width: 38px; height: 38px; font-size: 23px; border-radius: 10px; }
+        .header-scrolled .brand-name { font-size: 22px; }
+        .header-scrolled .brand-tagline { font-size: 10px; }
+        .navbar-toggler { border: 0; padding: 8px 10px; transition: transform .2s ease; }
+        .navbar-toggler:hover { transform: scale(1.08); }
+        .nav-link-menu { margin: 0; position: relative; }
+        .nav-link-menu::after { content: ''; position: absolute; left: 50%; bottom: -8px; width: 0; height: 3px; border-radius: 999px; background: #003379; transform: translateX(-50%); transition: width .25s ease; }
+        .nav-link:hover .nav-link-menu::after { width: 70%; }
+        .header-title, .about-title, .pricing-title h2, .vertical-slider-title, .testimonials-title { overflow-wrap: anywhere; }
+        .learn-more-btn, .learn-extra-btn { text-align: center; white-space: normal; position: relative; overflow: hidden; transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease; }
+        .learn-more-btn::before { content: ''; position: absolute; top: 0; left: -80%; width: 55%; height: 100%; background: linear-gradient(120deg, transparent, rgba(255,255,255,.34), transparent); transform: skewX(-20deg); transition: left .55s ease; }
+        .learn-more-btn:hover::before { left: 130%; }
+        .learn-more-btn:hover, .learn-extra-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(0, 51, 121, .18); }
+        .service-box, .blog-details, .pricing-card, .contact-form, .client-box { max-width: 100%; transition: transform .28s ease, box-shadow .28s ease, background-color .28s ease; }
+        .service-box:hover, .blog-details:hover, .pricing-card:hover, .contact-form:hover { transform: translateY(-8px); box-shadow: 0 18px 38px rgba(0,0,0,.10); }
+        .client-box:hover { transform: translateY(-6px) scale(1.04); box-shadow: 0 16px 32px rgba(0,0,0,.10); }
+        .header-img-section img, .about-header-img img, .contact-header-img img { animation: floatVisual 6s ease-in-out infinite; will-change: transform; }
+        .header-title-section .header-title { animation: heroTitleIn .75s ease both; }
+        .header-title-section .header-title-text { animation: heroTextIn .9s ease both; }
+        .header-title-section .learn-more-btn-section { animation: heroButtonIn 1.05s ease both; }
+        .reveal-on-scroll { opacity: 0; transform: translateY(34px); transition: opacity .72s ease, transform .72s ease; will-change: opacity, transform; }
+        .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+        .reveal-on-scroll.reveal-left { transform: translateX(-34px); }
+        .reveal-on-scroll.reveal-right { transform: translateX(34px); }
+        .reveal-on-scroll.reveal-left.is-visible, .reveal-on-scroll.reveal-right.is-visible { transform: translateX(0); }
+        .service-box .icon { transition: transform .28s ease; }
+        .service-box:hover .icon { transform: translateY(-4px) scale(1.08) rotate(-3deg); }
+        .contact-form .form-control { transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+        .contact-form .form-control:focus { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0, 51, 121, .10); }
+        #preloader { animation: preloaderFade .55s ease both; }
+        @keyframes brandPulse { 0%,100% { box-shadow: 0 8px 18px rgba(0,51,121,.18); } 50% { box-shadow: 0 12px 28px rgba(0,51,121,.30); } }
+        @keyframes floatVisual { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @keyframes heroTitleIn { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes heroTextIn { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes heroButtonIn { from { opacity: 0; transform: translateY(30px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes preloaderFade { from { opacity: 1; } to { opacity: 1; } }
         @media screen and (max-width: 991px) {
-            .navbar {
-                margin-top: 0;
-                padding-top: 8px;
-                padding-bottom: 8px;
-                background-color: #fff !important;
-                box-shadow: 0 4px 6px 0 rgba(12, 0, 46, .05);
-            }
-
-            .navbar-brand {
-                min-width: auto;
-                margin-right: 0;
-            }
-
-            .brand-lockup {
-                min-width: auto;
-                gap: 10px;
-                padding: 4px 0;
-            }
-
-            .brand-mark {
-                width: 40px;
-                height: 40px;
-                font-size: 24px;
-                border-radius: 11px;
-            }
-
-            .brand-name {
-                font-size: 23px;
-            }
-
-            .brand-tagline {
-                font-size: 10px;
-                letter-spacing: 1.1px;
-            }
-
-            .navbar-collapse {
-                width: 100%;
-                margin-top: 10px;
-                max-height: calc(100vh - 75px);
-                overflow-y: auto;
-                border-radius: 0 0 12px 12px;
-            }
-
-            .navbar-nav {
-                align-items: stretch;
-            }
-
-            .nav-item {
-                margin-left: 0;
-                margin-right: 0;
-            }
-
-            .nav-item .nav-link {
-                text-align: center;
-                padding: 10px 12px;
-            }
-
-            .header {
-                padding-top: 115px;
-                padding-bottom: 55px;
-                background-size: cover;
-                background-position: center top;
-            }
-
-            .header-container {
-                padding-left: 15px;
-                padding-right: 15px;
-            }
-
-            .header-title-section {
-                margin-top: 24px;
-                padding-left: 0;
-                padding-right: 0;
-            }
-
-            .header-title {
-                font-size: 34px;
-                line-height: 1.2;
-            }
-
-            .header-title-text {
-                font-size: 16px;
-                line-height: 1.5;
-            }
-
-            .about-title,
-            .pricing-title h2,
-            .vertical-slider-title {
-                font-size: 32px;
-                line-height: 1.25;
-            }
-
-            .footer-subsection,
-            .footer-logo {
-                padding-left: 15px;
-                padding-right: 15px;
-            }
+            .navbar { margin-top: 0; padding-top: 8px; padding-bottom: 8px; background-color: #fff !important; box-shadow: 0 4px 6px 0 rgba(12,0,46,.05); }
+            .navbar-brand { min-width: auto; margin-right: 0; }
+            .brand-lockup { min-width: auto; gap: 10px; padding: 4px 0; }
+            .brand-mark { width: 40px; height: 40px; font-size: 24px; border-radius: 11px; }
+            .brand-name { font-size: 23px; }
+            .brand-tagline { font-size: 10px; letter-spacing: 1.1px; }
+            .navbar-collapse { width: 100%; margin-top: 10px; max-height: calc(100vh - 75px); overflow-y: auto; border-radius: 0 0 12px 12px; }
+            .navbar-nav { align-items: stretch; }
+            .nav-item { margin-left: 0; margin-right: 0; }
+            .nav-item .nav-link { text-align: center; padding: 10px 12px; }
+            .header { padding-top: 115px; padding-bottom: 55px; background-size: cover; background-position: center top; }
+            .header-container { padding-left: 15px; padding-right: 15px; }
+            .header-title-section { margin-top: 24px; padding-left: 0; padding-right: 0; }
+            .header-title { font-size: 34px; line-height: 1.2; }
+            .header-title-text { font-size: 16px; line-height: 1.5; }
+            .about-title, .pricing-title h2, .vertical-slider-title { font-size: 32px; line-height: 1.25; }
+            .footer-subsection, .footer-logo { padding-left: 15px; padding-right: 15px; }
         }
-
         @media screen and (max-width: 575px) {
-            .navbar {
-                min-height: 76px;
-            }
-
-            .brand-lockup {
-                gap: 8px;
-            }
-
-            .brand-mark {
-                width: 38px;
-                height: 38px;
-                font-size: 23px;
-                border-radius: 10px;
-            }
-
-            .brand-name {
-                font-size: 21px;
-            }
-
-            .brand-tagline {
-                font-size: 9px;
-                letter-spacing: 0.9px;
-            }
-
-            .ti-layout-grid2 {
-                font-size: 28px;
-            }
-
-            .header {
-                padding-top: 105px;
-                padding-bottom: 45px;
-            }
-
-            .header-title {
-                font-size: 28px !important;
-                line-height: 1.2;
-                margin-bottom: 12px;
-            }
-
-            .header-title-text {
-                font-size: 15px !important;
-                line-height: 1.55;
-                margin-bottom: 18px;
-            }
-
-            .learn-more-btn-section {
-                justify-content: center;
-                width: 100%;
-            }
-
-            .learn-more-btn,
-            .learn-extra-btn {
-                width: 100%;
-                max-width: 290px;
-                font-size: 14px !important;
-                padding: 10px 14px !important;
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .about-title,
-            .pricing-title h2,
-            .vertical-slider-title {
-                font-size: 28px;
-            }
-
-            .about-text,
-            .vertical-slider-text,
-            .testimonials-slider-text,
-            .footer-logo p,
-            .footer-subsection-text,
-            .footer-subsection-list li {
-                font-size: 15px;
-                line-height: 1.55;
-            }
-
-            .service-list .service-box {
-                padding: 22px;
-            }
-
-            .client-box {
-                width: 120px;
-                height: 120px;
-            }
-
-            form.contact-form {
-                padding: 16px;
-            }
+            .navbar { min-height: 76px; }
+            .brand-lockup { gap: 8px; }
+            .brand-mark { width: 38px; height: 38px; font-size: 23px; border-radius: 10px; }
+            .brand-name { font-size: 21px; }
+            .brand-tagline { font-size: 9px; letter-spacing: .9px; }
+            .ti-layout-grid2 { font-size: 28px; }
+            .header { padding-top: 105px; padding-bottom: 45px; }
+            .header-title { font-size: 28px !important; line-height: 1.2; margin-bottom: 12px; }
+            .header-title-text { font-size: 15px !important; line-height: 1.55; margin-bottom: 18px; }
+            .learn-more-btn-section { justify-content: center; width: 100%; }
+            .learn-more-btn, .learn-extra-btn { width: 100%; max-width: 290px; font-size: 14px !important; padding: 10px 14px !important; margin-left: auto; margin-right: auto; }
+            .about-title, .pricing-title h2, .vertical-slider-title { font-size: 28px; }
+            .about-text, .vertical-slider-text, .testimonials-slider-text, .footer-logo p, .footer-subsection-text, .footer-subsection-list li { font-size: 15px; line-height: 1.55; }
+            .service-list .service-box { padding: 22px; }
+            .client-box { width: 120px; height: 120px; }
+            form.contact-form { padding: 16px; }
         }
-
         @media screen and (max-width: 360px) {
-            .brand-mark {
-                width: 34px;
-                height: 34px;
-                font-size: 20px;
-            }
-
-            .brand-name {
-                font-size: 19px;
-            }
-
-            .brand-tagline {
-                display: none;
-            }
-
-            .header-title {
-                font-size: 25px !important;
-            }
+            .brand-mark { width: 34px; height: 34px; font-size: 20px; }
+            .brand-name { font-size: 19px; }
+            .brand-tagline { display: none; }
+            .header-title { font-size: 25px !important; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+            .reveal-on-scroll { opacity: 1 !important; transform: none !important; }
         }
     `;
 
     $('#mobile-responsive-hotfix').remove();
-    $('<style id="mobile-responsive-hotfix"></style>').text(responsiveFixCss).appendTo('head');
+    $('<style id="mobile-responsive-hotfix"></style>').text(sitePolishCss).appendTo('head');
+
+    var revealSelectors = [
+        '.about-title-section', '.about-header-img', '.services-section .col-lg-4', '.blog-section .col-lg-12',
+        '.client-box', '.contact-section .col-lg-6', '.contact-section .col-lg-5', '.footer-section .col-lg-4',
+        '.footer-section .col-lg-3', '.footer-section .col-lg-2', '.footer-credits'
+    ].join(',');
+
+    $(revealSelectors).each(function (index) {
+        var $item = $(this);
+        $item.addClass('reveal-on-scroll');
+        if (index % 3 === 1) $item.addClass('reveal-left');
+        if (index % 3 === 2) $item.addClass('reveal-right');
+        $item.css('transition-delay', Math.min(index * 45, 240) + 'ms');
+    });
+
+    if ('IntersectionObserver' in window) {
+        var revealObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal-on-scroll').forEach(function (el) { revealObserver.observe(el); });
+    } else {
+        $('.reveal-on-scroll').addClass('is-visible');
+    }
 
     jQuery('#preloader').delay(500).fadeOut(500);
 
     $(window).scroll(function () {
-        if ($(this).scrollTop() > 20) {
-            $('#navbar').addClass('header-scrolled');
-        } else {
-            $('#navbar').removeClass('header-scrolled');
-        }
+        if ($(this).scrollTop() > 20) $('#navbar').addClass('header-scrolled');
+        else $('#navbar').removeClass('header-scrolled');
     });
 
     if ($.fn.owlCarousel) {
-        $('.owl-testimonials-slider').owlCarousel({
-            items: 1,
-            loop: true,
-            nav: true,
-            autoplay: true,
-            autoplayTimeout: 5000,
-            autoplayHoverPause: false,
-            responsiveClass: true,
-            responsive: {
-                0: { items: 1 },
-                600: { items: 1 },
-                1000: { items: 1 }
-            }
-        });
+        $('.owl-testimonials-slider').owlCarousel({ items: 1, loop: true, nav: true, autoplay: true, autoplayTimeout: 5000, autoplayHoverPause: false, responsiveClass: true, responsive: { 0: { items: 1 }, 600: { items: 1 }, 1000: { items: 1 } } });
     }
 
     $('.navbar-mobile .nav-item .nav-link').on('click', function () {
         var $navbarCollapse = $('#navbarNav');
-        if ($(window).width() <= 991 && $navbarCollapse.hasClass('show')) {
-            $('.navbar-toggler').trigger('click');
-        }
+        if ($(window).width() <= 991 && $navbarCollapse.hasClass('show')) $('.navbar-toggler').trigger('click');
     });
 
     $(window).on('resize', function () {
@@ -446,87 +187,23 @@ $(function () {
         var cleanForm = $contactForm.clone(false)[0];
         $contactForm[0].parentNode.replaceChild(cleanForm, $contactForm[0]);
         $contactForm = $(cleanForm);
-
         $contactForm.on('submit', function (event) {
             event.preventDefault();
-
-            var name = $.trim($('#name').val() || '');
-            var mobile = $.trim($('#mobile').val() || '');
-            var email = $.trim($('#email').val() || '');
-            var message = $.trim($('#message').val() || '');
+            var name = $.trim($('#name').val() || ''), mobile = $.trim($('#mobile').val() || ''), email = $.trim($('#email').val() || ''), message = $.trim($('#message').val() || '');
             var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             var mobilePattern = /^[0-9+\-\s()]{7,20}$/;
-
-            if (!name || !mobile || !email || !message) {
-                alert('Please fill in all required details.');
-                return;
-            }
-
-            if (!emailPattern.test(email)) {
-                alert('Please enter a valid email address.');
-                return;
-            }
-
-            if (!mobilePattern.test(mobile)) {
-                alert('Please enter a valid mobile number.');
-                return;
-            }
-
+            if (!name || !mobile || !email || !message) return alert('Please fill in all required details.');
+            if (!emailPattern.test(email)) return alert('Please enter a valid email address.');
+            if (!mobilePattern.test(mobile)) return alert('Please enter a valid mobile number.');
             var $submitButton = $contactForm.find('button[type="submit"], input[type="submit"]').first();
             var originalButtonText = $submitButton.is('input') ? $submitButton.val() : $submitButton.text();
-
-            if ($submitButton.length) {
-                $submitButton.prop('disabled', true);
-                if ($submitButton.is('input')) {
-                    $submitButton.val('Sending...');
-                } else {
-                    $submitButton.text('Sending...');
-                }
-            }
-
-            function resetButton() {
-                if ($submitButton.length) {
-                    $submitButton.prop('disabled', false);
-                    if ($submitButton.is('input')) {
-                        $submitButton.val(originalButtonText);
-                    } else {
-                        $submitButton.text(originalButtonText);
-                    }
-                }
-            }
-
+            function setButton(text, disabled) { if ($submitButton.length) { $submitButton.prop('disabled', disabled); $submitButton.is('input') ? $submitButton.val(text) : $submitButton.text(text); } }
+            function resetButton() { setButton(originalButtonText, false); }
+            setButton('Sending...', true);
             if (window.emailjs && typeof emailjs.sendForm === 'function') {
-                emailjs.sendForm('service_6iixv9p', 'template_pkr57uq', cleanForm)
-                    .then(function () {
-                        alert('Message sent successfully!');
-                        cleanForm.reset();
-                        resetButton();
-                    }, function (error) {
-                        console.log(error);
-                        alert('Failed to send message. Please try again.');
-                        resetButton();
-                    });
+                emailjs.sendForm('service_6iixv9p', 'template_pkr57uq', cleanForm).then(function () { alert('Message sent successfully!'); cleanForm.reset(); resetButton(); }, function (error) { console.log(error); alert('Failed to send message. Please try again.'); resetButton(); });
             } else {
-                $.ajax({
-                    type: 'POST',
-                    url: 'https://visharaminfo.in/contact.php',
-                    data: {
-                        name: name,
-                        email: email,
-                        mobile: mobile,
-                        message: message
-                    },
-                    success: function (resultData) {
-                        alert(resultData || 'Message sent successfully!');
-                        cleanForm.reset();
-                        resetButton();
-                    },
-                    error: function (err) {
-                        console.log(err);
-                        alert('Failed to send message. Please try again.');
-                        resetButton();
-                    }
-                });
+                $.ajax({ type: 'POST', url: 'https://visharaminfo.in/contact.php', data: { name: name, email: email, mobile: mobile, message: message }, success: function (resultData) { alert(resultData || 'Message sent successfully!'); cleanForm.reset(); resetButton(); }, error: function (err) { console.log(err); alert('Failed to send message. Please try again.'); resetButton(); } });
             }
         });
     }
