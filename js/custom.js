@@ -1,17 +1,47 @@
 $(function () {
     'use strict'; // Start of use strict
 
-    // Responsive hotfix for mobile/tablet layout stability.
-    // This safely overrides the existing stylesheet without changing desktop design.
+    // Runtime cleanup and UI polish.
+    var siteName = 'Vtechiee';
+    var siteUrl = 'https://visharaminfo.in/';
+    var siteTitle = 'Vtechiee: Software Development, Website Design & Cloud Solutions';
+    var siteDescription = 'Website development company in Melvisharam, Ranipet and Vellore offering React, PHP, Node, WordPress, eCommerce, SAP B1 support, hosting and cloud solutions.';
+
+    document.title = siteTitle;
+    $('meta[name="description"]').attr('content', siteDescription);
+    $('meta[name="keywords"]').attr('content', 'website development, web design, software development, SAP B1 support, cloud solutions, hosting, ecommerce website, Melvisharam, Ranipet, Vellore');
+    $('meta[name="author"]').attr('content', siteName);
+    $('meta[property="og:title"]').attr('content', siteTitle);
+    $('meta[property="og:site_name"]').attr('content', siteName);
+    $('meta[property="og:url"]').attr('content', siteUrl);
+    $('meta[property="og:description"]').attr('content', siteDescription);
+    $('meta[name="twitter:title"]').attr('content', siteTitle);
+    $('meta[name="twitter:description"]').attr('content', siteDescription);
+
+    // Correct visible typo without touching the large HTML file.
+    $('.header-title').filter(function () {
+        return $.trim($(this).text()) === 'SAP B1 Support,Upgradtions';
+    }).text('SAP B1 Support & Upgrades');
+
+    // Responsive hotfix for mobile/tablet layout stability and improved logo visibility.
     var responsiveFixCss = `
         html, body {
             max-width: 100%;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         img, svg, video, canvas {
             max-width: 100%;
             height: auto;
+        }
+
+        a:focus,
+        button:focus,
+        input:focus,
+        textarea:focus {
+            outline: 2px solid #003379 !important;
+            outline-offset: 3px;
         }
 
         .wrapper {
@@ -29,9 +59,30 @@ $(function () {
             max-width: 100%;
         }
 
+        .navbar-brand-logo {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            width: 185px;
+            max-height: 64px;
+            object-fit: contain;
+        }
+
+        .header-scrolled .navbar-brand img {
+            width: 135px;
+            max-height: 58px;
+            object-fit: contain;
+        }
+
         .navbar-toggler {
             border: 0;
             padding: 8px 10px;
+        }
+
+        .nav-link-menu {
+            margin: 0;
         }
 
         .header-title,
@@ -66,7 +117,8 @@ $(function () {
 
             .navbar-brand img,
             .header-scrolled .navbar-brand img {
-                width: 120px;
+                width: 150px;
+                max-height: 58px;
                 margin-left: 0;
             }
 
@@ -93,7 +145,7 @@ $(function () {
             }
 
             .header {
-                padding-top: 110px;
+                padding-top: 115px;
                 padding-bottom: 55px;
                 background-size: cover;
                 background-position: center top;
@@ -135,8 +187,22 @@ $(function () {
         }
 
         @media screen and (max-width: 575px) {
+            .navbar {
+                min-height: 76px;
+            }
+
+            .navbar-brand img,
+            .header-scrolled .navbar-brand img {
+                width: 145px !important;
+                max-height: 56px;
+            }
+
+            .ti-layout-grid2 {
+                font-size: 28px;
+            }
+
             .header {
-                padding-top: 95px;
+                padding-top: 105px;
                 padding-bottom: 45px;
             }
 
@@ -204,17 +270,18 @@ $(function () {
 
             .navbar-brand img,
             .header-scrolled .navbar-brand img {
-                width: 105px;
+                width: 132px !important;
             }
         }
     `;
 
+    $('#mobile-responsive-hotfix').remove();
     $('<style id="mobile-responsive-hotfix"></style>').text(responsiveFixCss).appendTo('head');
 
-    //hide preloader after loaded
+    // Hide preloader after loaded.
     jQuery('#preloader').delay(500).fadeOut(500);
 
-    // Fixed Navigation js
+    // Fixed navigation js.
     $(window).scroll(function () {
         if ($(this).scrollTop() > 20) {
             $('#navbar').addClass('header-scrolled');
@@ -223,27 +290,29 @@ $(function () {
         }
     });
 
-    // testimonials Slider
-    $(".owl-testimonials-slider").owlCarousel({
-        items: 1,
-        loop: true,
-        nav: true,
-        autoplay: true,
-        autoplayTimeout: 5000,
-        autoplayHoverPause: false,
-        responsiveClass: true,
-        responsive: {
-            0: {
-                items: 1
-            },
-            600: {
-                items: 1
-            },
-            1000: {
-                items: 1
+    // Testimonials Slider.
+    if ($.fn.owlCarousel) {
+        $('.owl-testimonials-slider').owlCarousel({
+            items: 1,
+            loop: true,
+            nav: true,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            autoplayHoverPause: false,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 1
+                },
+                1000: {
+                    items: 1
+                }
             }
-        }
-    });
+        });
+    }
 
     // Mobile navbar close after clicking a menu item.
     $('.navbar-mobile .nav-item .nav-link').on('click', function () {
@@ -260,4 +329,95 @@ $(function () {
             $('.navbar-toggler').attr('aria-expanded', 'false');
         }
     });
+
+    // Replace duplicate/competing contact form handlers with one controlled handler.
+    var $contactForm = $('.contact-form').first();
+    if ($contactForm.length) {
+        var cleanForm = $contactForm.clone(false)[0];
+        $contactForm[0].parentNode.replaceChild(cleanForm, $contactForm[0]);
+        $contactForm = $(cleanForm);
+
+        $contactForm.on('submit', function (event) {
+            event.preventDefault();
+
+            var name = $.trim($('#name').val() || '');
+            var mobile = $.trim($('#mobile').val() || '');
+            var email = $.trim($('#email').val() || '');
+            var message = $.trim($('#message').val() || '');
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            var mobilePattern = /^[0-9+\-\s()]{7,20}$/;
+
+            if (!name || !mobile || !email || !message) {
+                alert('Please fill in all required details.');
+                return;
+            }
+
+            if (!emailPattern.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            if (!mobilePattern.test(mobile)) {
+                alert('Please enter a valid mobile number.');
+                return;
+            }
+
+            var $submitButton = $contactForm.find('button[type="submit"], input[type="submit"]').first();
+            var originalButtonText = $submitButton.is('input') ? $submitButton.val() : $submitButton.text();
+
+            if ($submitButton.length) {
+                $submitButton.prop('disabled', true);
+                if ($submitButton.is('input')) {
+                    $submitButton.val('Sending...');
+                } else {
+                    $submitButton.text('Sending...');
+                }
+            }
+
+            function resetButton() {
+                if ($submitButton.length) {
+                    $submitButton.prop('disabled', false);
+                    if ($submitButton.is('input')) {
+                        $submitButton.val(originalButtonText);
+                    } else {
+                        $submitButton.text(originalButtonText);
+                    }
+                }
+            }
+
+            if (window.emailjs && typeof emailjs.sendForm === 'function') {
+                emailjs.sendForm('service_6iixv9p', 'template_pkr57uq', cleanForm)
+                    .then(function () {
+                        alert('Message sent successfully!');
+                        cleanForm.reset();
+                        resetButton();
+                    }, function (error) {
+                        console.log(error);
+                        alert('Failed to send message. Please try again.');
+                        resetButton();
+                    });
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: 'https://visharaminfo.in/contact.php',
+                    data: {
+                        name: name,
+                        email: email,
+                        mobile: mobile,
+                        message: message
+                    },
+                    success: function (resultData) {
+                        alert(resultData || 'Message sent successfully!');
+                        cleanForm.reset();
+                        resetButton();
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        alert('Failed to send message. Please try again.');
+                        resetButton();
+                    }
+                });
+            }
+        });
+    }
 });
