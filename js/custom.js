@@ -1,7 +1,6 @@
 $(function () {
-    'use strict'; // Start of use strict
+    'use strict';
 
-    // Runtime cleanup and UI polish.
     var siteName = 'Vtechiee';
     var siteUrl = 'https://visharaminfo.in/';
     var siteTitle = 'Vtechiee: Software Development, Website Design & Cloud Solutions';
@@ -18,12 +17,25 @@ $(function () {
     $('meta[name="twitter:title"]').attr('content', siteTitle);
     $('meta[name="twitter:description"]').attr('content', siteDescription);
 
-    // Correct visible typo without touching the large HTML file.
     $('.header-title').filter(function () {
         return $.trim($(this).text()) === 'SAP B1 Support,Upgradtions';
     }).text('SAP B1 Support & Upgrades');
 
-    // Responsive hotfix for mobile/tablet layout stability and improved logo visibility.
+    // Replace the tiny/poor header image logo with a clean responsive brand lockup.
+    var $brandLogo = $('.navbar-brand-logo').first();
+    if ($brandLogo.length && !$brandLogo.find('.brand-lockup').length) {
+        $brandLogo.attr('aria-label', siteName);
+        $brandLogo.html(
+            '<span class="brand-lockup">' +
+                '<span class="brand-mark">V</span>' +
+                '<span class="brand-copy">' +
+                    '<span class="brand-name">Vtechiee</span>' +
+                    '<span class="brand-tagline">IT Solutions</span>' +
+                '</span>' +
+            '</span>'
+        );
+    }
+
     var responsiveFixCss = `
         html, body {
             max-width: 100%;
@@ -59,21 +71,88 @@ $(function () {
             max-width: 100%;
         }
 
-        .navbar-brand-logo {
+        .navbar-brand {
+            min-width: 210px;
+            margin-right: 18px;
+        }
+
+        .navbar-brand-logo,
+        .navbar-brand-logo:hover,
+        .navbar-brand-logo:focus {
             display: inline-flex;
             align-items: center;
+            text-decoration: none;
         }
 
-        .navbar-brand img {
-            width: 185px;
-            max-height: 64px;
-            object-fit: contain;
+        .brand-lockup {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 190px;
+            padding: 6px 0;
         }
 
-        .header-scrolled .navbar-brand img {
-            width: 135px;
-            max-height: 58px;
-            object-fit: contain;
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: #003379;
+            color: #fff;
+            font-family: Inter, sans-serif;
+            font-size: 27px;
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -1px;
+            box-shadow: 0 8px 18px rgba(0, 51, 121, 0.18);
+        }
+
+        .brand-copy {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.05;
+        }
+
+        .brand-name {
+            color: #003379;
+            font-family: Inter, sans-serif;
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            white-space: nowrap;
+        }
+
+        .brand-tagline {
+            margin-top: 4px;
+            color: #5f6f89;
+            font-family: Inter, sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .header-scrolled .brand-lockup {
+            gap: 10px;
+        }
+
+        .header-scrolled .brand-mark {
+            width: 38px;
+            height: 38px;
+            font-size: 23px;
+            border-radius: 10px;
+        }
+
+        .header-scrolled .brand-name {
+            font-size: 22px;
+        }
+
+        .header-scrolled .brand-tagline {
+            font-size: 10px;
         }
 
         .navbar-toggler {
@@ -115,11 +194,31 @@ $(function () {
                 box-shadow: 0 4px 6px 0 rgba(12, 0, 46, .05);
             }
 
-            .navbar-brand img,
-            .header-scrolled .navbar-brand img {
-                width: 150px;
-                max-height: 58px;
-                margin-left: 0;
+            .navbar-brand {
+                min-width: auto;
+                margin-right: 0;
+            }
+
+            .brand-lockup {
+                min-width: auto;
+                gap: 10px;
+                padding: 4px 0;
+            }
+
+            .brand-mark {
+                width: 40px;
+                height: 40px;
+                font-size: 24px;
+                border-radius: 11px;
+            }
+
+            .brand-name {
+                font-size: 23px;
+            }
+
+            .brand-tagline {
+                font-size: 10px;
+                letter-spacing: 1.1px;
             }
 
             .navbar-collapse {
@@ -191,10 +290,24 @@ $(function () {
                 min-height: 76px;
             }
 
-            .navbar-brand img,
-            .header-scrolled .navbar-brand img {
-                width: 145px !important;
-                max-height: 56px;
+            .brand-lockup {
+                gap: 8px;
+            }
+
+            .brand-mark {
+                width: 38px;
+                height: 38px;
+                font-size: 23px;
+                border-radius: 10px;
+            }
+
+            .brand-name {
+                font-size: 21px;
+            }
+
+            .brand-tagline {
+                font-size: 9px;
+                letter-spacing: 0.9px;
             }
 
             .ti-layout-grid2 {
@@ -264,13 +377,22 @@ $(function () {
         }
 
         @media screen and (max-width: 360px) {
-            .header-title {
-                font-size: 25px !important;
+            .brand-mark {
+                width: 34px;
+                height: 34px;
+                font-size: 20px;
             }
 
-            .navbar-brand img,
-            .header-scrolled .navbar-brand img {
-                width: 132px !important;
+            .brand-name {
+                font-size: 19px;
+            }
+
+            .brand-tagline {
+                display: none;
+            }
+
+            .header-title {
+                font-size: 25px !important;
             }
         }
     `;
@@ -278,10 +400,8 @@ $(function () {
     $('#mobile-responsive-hotfix').remove();
     $('<style id="mobile-responsive-hotfix"></style>').text(responsiveFixCss).appendTo('head');
 
-    // Hide preloader after loaded.
     jQuery('#preloader').delay(500).fadeOut(500);
 
-    // Fixed navigation js.
     $(window).scroll(function () {
         if ($(this).scrollTop() > 20) {
             $('#navbar').addClass('header-scrolled');
@@ -290,7 +410,6 @@ $(function () {
         }
     });
 
-    // Testimonials Slider.
     if ($.fn.owlCarousel) {
         $('.owl-testimonials-slider').owlCarousel({
             items: 1,
@@ -301,20 +420,13 @@ $(function () {
             autoplayHoverPause: false,
             responsiveClass: true,
             responsive: {
-                0: {
-                    items: 1
-                },
-                600: {
-                    items: 1
-                },
-                1000: {
-                    items: 1
-                }
+                0: { items: 1 },
+                600: { items: 1 },
+                1000: { items: 1 }
             }
         });
     }
 
-    // Mobile navbar close after clicking a menu item.
     $('.navbar-mobile .nav-item .nav-link').on('click', function () {
         var $navbarCollapse = $('#navbarNav');
         if ($(window).width() <= 991 && $navbarCollapse.hasClass('show')) {
@@ -322,7 +434,6 @@ $(function () {
         }
     });
 
-    // Keep mobile menu state correct after screen rotation / browser resize.
     $(window).on('resize', function () {
         if ($(window).width() > 991) {
             $('#navbarNav').removeClass('show');
@@ -330,7 +441,6 @@ $(function () {
         }
     });
 
-    // Replace duplicate/competing contact form handlers with one controlled handler.
     var $contactForm = $('.contact-form').first();
     if ($contactForm.length) {
         var cleanForm = $contactForm.clone(false)[0];
