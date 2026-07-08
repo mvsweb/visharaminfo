@@ -12,7 +12,38 @@ $(function () {
     var $brandLogo = $('.navbar-brand-logo').first();
     if ($brandLogo.length) $brandLogo.attr('aria-label','Vtechiee').html('<img src="images/vtechiee-logo.svg?v=3" class="vtechiee-main-logo" alt="Vtechiee Cloud SAP Software">');
     $('#vtechiee-logo-style').remove();
-    $('<style id="vtechiee-logo-style"></style>').text('.navbar-brand{min-width:260px!important;display:flex!important;align-items:center!important}.navbar-brand-logo{display:flex!important;align-items:center!important}.navbar-brand-logo img.vtechiee-main-logo,.navbar .navbar-brand img.vtechiee-main-logo,.header-scrolled .navbar-brand img.vtechiee-main-logo{width:245px!important;max-width:245px!important;height:auto!important;margin-left:0!important;display:block!important}.navbar{min-height:78px!important;padding-top:8px!important;padding-bottom:8px!important}.header-scrolled{height:78px!important;min-height:78px!important}.header-scrolled .navbar-brand img.vtechiee-main-logo{width:225px!important;max-width:225px!important}@media(max-width:1200px){.navbar-brand{min-width:230px!important}.navbar-brand-logo img.vtechiee-main-logo,.navbar .navbar-brand img.vtechiee-main-logo,.header-scrolled .navbar-brand img.vtechiee-main-logo{width:220px!important;max-width:220px!important}}@media(max-width:991px){.navbar-brand{min-width:auto!important}.navbar-brand-logo img.vtechiee-main-logo,.navbar .navbar-brand img.vtechiee-main-logo,.header-scrolled .navbar-brand img.vtechiee-main-logo{width:205px!important;max-width:205px!important}.navbar,.header-scrolled{min-height:74px!important;height:auto!important}}@media(max-width:575px){.navbar-brand-logo img.vtechiee-main-logo,.navbar .navbar-brand img.vtechiee-main-logo,.header-scrolled .navbar-brand img.vtechiee-main-logo{width:175px!important;max-width:175px!important}.navbar,.header-scrolled{min-height:70px!important}}').appendTo('head');
+    $('<style id="vtechiee-logo-style"></style>').text('.navbar-brand{min-width:260px!important;display:flex!important;align-items:center!important}.navbar-brand-logo{display:flex!important;align-items:center!important}.navbar-brand-logo img.vtechiee-main-logo,.navbar .navbar-brand img.vtechiee-main-logo,.header-scrolled .navbar-brand img.vtechiee-main-logo{width:245px!important;max-width:245px!important;height:auto!important;margin-left:0!important;display:block!important}.navbar{min-height:78px!important;padding-top:8px!important;padding-bottom:8px!important}.header-scrolled{height:78px!important;min-height:78px!important}.header-scrolled .navbar-brand img.vtechiee-main-logo{width:225px!important;max-width:225px!important}@media(max-width:1200px){.navbar-brand{min-width:230px!important}.navbar-brand-logo img.vtechiee-main-logo,.navbar .navbar-brand img.vtechiee-main-logo,.header-scrolled .navbar-brand img.vtechiee-main-logo{width:220px!important;max-width:220px!important}}@media(max-width:991px){.navbar-brand{min-width:auto!important}.navbar-brand-logo img.vtechiee-main-logo,.navbar .navbar-brand img.vtechiee-main-logo,.header-scrolled .navbar-brand img.vtechiee-main-logo{width:205px!important;max-width:205px!important}.navbar,.header-scrolled{min-height:74px!important;height:auto!important}}@media(max-width:575px){.navbar-brand-logo img.vtechiee-main-logo,.navbar .navbar-brand img.vtechiee-main-logo,.header-scrolled .navbar-brand img.vtechiee-main-logo{width:175px!important;max-width:175px!important}.navbar,.header-scrolled{min-height:70px!important}}.contact-status{margin-top:12px;font-weight:700;color:#003379}.contact-form .hidden-honey{display:none!important}').appendTo('head');
+
+    var $oldForm = $('.contact-form').first();
+    if ($oldForm.length) {
+        var cleanForm = $oldForm.clone(false);
+        $oldForm.replaceWith(cleanForm);
+        cleanForm.attr({ action: 'https://formsubmit.co/support@vtechiee.com', method: 'POST', autocomplete: 'on' });
+        cleanForm.find('#name').attr({ required: true, minlength: 2 });
+        cleanForm.find('#mobile').attr({ required: true, pattern: '[0-9+\\-\\s()]{7,20}' });
+        cleanForm.find('#email').attr({ required: true });
+        cleanForm.find('#message').attr({ required: true, minlength: 10 });
+        cleanForm.append('<input type="text" name="_honey" class="hidden-honey" tabindex="-1" autocomplete="off">');
+        cleanForm.append('<input type="hidden" name="_subject" value="New Vtechiee Website Enquiry">');
+        cleanForm.append('<input type="hidden" name="_template" value="box">');
+        cleanForm.append('<input type="hidden" name="_captcha" value="false">');
+        cleanForm.append('<input type="hidden" name="_next" value="https://vtechiee.com/#contact">');
+        cleanForm.append('<div class="contact-status" aria-live="polite"></div>');
+        cleanForm.on('submit', function(e){
+            var name = $.trim($('#name').val() || '');
+            var phone = $.trim($('#mobile').val() || '');
+            var email = $.trim($('#email').val() || '');
+            var message = $.trim($('#message').val() || '');
+            if (name.length < 2 || phone.length < 7 || email.indexOf('@') < 1 || message.length < 10) {
+                e.preventDefault();
+                cleanForm.find('.contact-status').text('Please enter valid name, phone, email and message.');
+                return false;
+            }
+            cleanForm.find('button[type="submit"]').prop('disabled', true).text('Sending...');
+            cleanForm.find('.contact-status').text('Sending securely...');
+        });
+    }
+
     if ($.fn.owlCarousel) $('.owl-testimonials-slider').owlCarousel({items:1,loop:true,nav:true,autoplay:true,autoplayTimeout:5000,autoplayHoverPause:false});
     $('.navbar-mobile .nav-item .nav-link').on('click',function(){var $nav=$('#navbarNav');if($(window).width()<=991&&$nav.hasClass('show'))$('.navbar-toggler').trigger('click');});
     $(window).on('scroll',function(){if($(this).scrollTop()>20)$('#navbar').addClass('header-scrolled');else $('#navbar').removeClass('header-scrolled');});
