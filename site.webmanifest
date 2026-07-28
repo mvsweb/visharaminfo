@@ -1,0 +1,17 @@
+{
+  "name": "Vtechiee",
+  "short_name": "Vtechiee",
+  "description": "SAP Business One, cloud infrastructure, managed IT and web application services.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f8ff",
+  "theme_color": "#0a1d38",
+  "icons": [
+    {
+      "src": "/images/fav.png",
+      "type": "image/png",
+      "sizes": "any",
+      "purpose": "any"
+    }
+  ]
+}
